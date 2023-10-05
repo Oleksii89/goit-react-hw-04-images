@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import {
   StyledSearchForm,
   StyledSearchFormButton,
@@ -8,38 +7,77 @@ import {
 } from './Searchbar.styled';
 import { FcSearch } from 'react-icons/fc';
 
-export class Searchbar extends Component {
-  state = { searchText: '' };
+import { useState } from 'react';
 
-  handleChange = evt => {
-    this.setState({ searchText: evt.currentTarget.value.toLowerCase() });
+const Searchbar = ({ onSubmit }) => {
+  const [searchText, setSearchText] = useState('');
+
+  const handleChange = evt => {
+    setSearchText(evt.currentTarget.value.toLowerCase());
   };
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-    this.props.onSubmit(this.state.searchText);
-    this.setState({ searchText: '' });
+
+    onSubmit(searchText);
+    setSearchText('');
   };
 
-  render() {
-    return (
-      <StyledSearchbarHeader>
-        <StyledSearchForm onSubmit={this.handleSubmit}>
-          <StyledSearchFormButton>
-            <StyledSearchFormButtonLabel>Search</StyledSearchFormButtonLabel>
-            <FcSearch size="24" />
-          </StyledSearchFormButton>
+  return (
+    <StyledSearchbarHeader>
+      <StyledSearchForm onSubmit={handleSubmit}>
+        <StyledSearchFormButton>
+          <StyledSearchFormButtonLabel>Search</StyledSearchFormButtonLabel>
+          <FcSearch size="24" />
+        </StyledSearchFormButton>
 
-          <StyledSearchFormInput
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.handleChange}
-            value={this.state.searchText}
-          />
-        </StyledSearchForm>
-      </StyledSearchbarHeader>
-    );
-  }
-}
+        <StyledSearchFormInput
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={handleChange}
+          value={searchText}
+        />
+      </StyledSearchForm>
+    </StyledSearchbarHeader>
+  );
+};
+
+export default Searchbar;
+
+// export class Searchbar extends Component {
+//   state = { searchText: '' };
+
+//   handleChange = evt => {
+//     this.setState({ searchText: evt.currentTarget.value.toLowerCase() });
+//   };
+
+//   handleSubmit = evt => {
+//     evt.preventDefault();
+//     this.props.onSubmit(this.state.searchText);
+//     this.setState({ searchText: '' });
+//   };
+
+//   render() {
+//     return (
+//       <StyledSearchbarHeader>
+//         <StyledSearchForm onSubmit={this.handleSubmit}>
+//           <StyledSearchFormButton>
+//             <StyledSearchFormButtonLabel>Search</StyledSearchFormButtonLabel>
+//             <FcSearch size="24" />
+//           </StyledSearchFormButton>
+
+//           <StyledSearchFormInput
+//             type="text"
+//             autoComplete="off"
+//             autoFocus
+//             placeholder="Search images and photos"
+//             onChange={this.handleChange}
+//             value={this.state.searchText}
+//           />
+//         </StyledSearchForm>
+//       </StyledSearchbarHeader>
+//     );
+//   }
+// }
